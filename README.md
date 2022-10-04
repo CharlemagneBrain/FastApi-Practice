@@ -1,2 +1,2 @@
-# FastApi-for-Beginners
+# FastApi-Practice
 FastAPI-Practice

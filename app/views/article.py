@@ -1,7 +1,10 @@
+from http.client import HTTPException
 from fastapi import APIRouter
 from fastapi import Request
 from app.models.articles import Article
 from app.core.config import templates
+from typing import List, Optional
+from app.schemas.article import (Article as ArticleSchema, ArticleCreate, ArticleUpdate)
 
 
 # async=>méthode effectué en parallèle, non bloquante
@@ -10,48 +13,62 @@ from app.core.config import templates
 
 article_views = APIRouter()
 
-@article_views.get("/articles/create", include_in_schema=False)
-async def create(request: Request):
+# CREATE
+@article_views.post("/articles/create", response_model=List[ArticleSchema])
+async def create(article_create: ArticleCreate):
     
     article = await Article.create(
-        title = "Article Test",
-        content = "Contenu Test"
+        title = article_create.title,
+        content = article_create.content
     )
     
-    return templates.TemplateResponse(
-        "articles_create.html",
-        {
-            "article" : article,
-            "request" : request  
-        }
-    )
+    return article
 
-@article_views.get("/articles", include_in_schema=False)
-async def index(request: Request):
+# EDIT
+@article_views.put("/articles/edit/{article_id}", response_model=ArticleSchema)
+async def edit(article_id: int, article_edit: ArticleUpdate):
+    article: Optional[Article] = await Article.get_or_none(id=article_id)
+    if not article:
+        raise HTTPException(status_code=404, detail="Article non trouvé")
     
-    articles = await Article.all().order_by("created_at")
+    article.title = article_edit.title
+    article.content = article_edit.content
     
-    return templates.TemplateResponse(
-        "articles_list",
-        {
-            "article" : articles,
-            "request" : request
-        }
-    )
-    
-@article_views.get("/api/articles")
-async def api_articles_list():
+    await article.save()
+    return article
 
-    articles = await Article.all().order_by('created_at')
 
+# Get an article by id
+@article_views.get("/articles/{article_id}", response_model=ArticleSchema)
+async def get_article(article_id: int):
+    
+    article: Optional[Article] = await Article.get_or_none(id=article_id)
+    if not article:
+        raise HTTPException(status_code=404, detail="Article non trouvé")
+    
+    return article
+    
+# Get articles with limit and offset parameters
+@article_views.get("/articles", response_model=List[ArticleSchema])
+async def index_list(offset: int=0, limit: Optional[int] = None):
+    
+    files_query = Article.all().order_by('-created_at').offset(offset)
+    
+    if limit:
+        files_query = files_query.limit(limit)
+    
+    articles = await files_query
+    
     return articles
 
-
-@article_views.get("/", include_in_schema=False)
-async def root(request: Request):
-
-    return templates.TemplateResponse(
-        "home.html",
-        {
-            "request": request
-        })
+@article_views.delete("/articles/delete/{article_id}")
+async def delete(article_id: int):
+    article: Optional[Article] = await Article.get_or_none(id=article_id)
+    
+    if not article:
+        raise HTTPException(status_code=404, detail="Article not found")
+    
+    await article.delete()
+    
+    
+    

@@ -10,25 +10,25 @@
 - CRUD
 
 ### Structure du projet: 
-(tuto source : https://pereprogramming.com/)
+(tuto source : https://pereprogramming.com/) </br>
 
-├── app/                   <-- répertoire contenant le code Python
-│   ├── core/              <-- fichiers partagés (config, exceptions, …)
-│   │   └── __init__.py
-│   ├── crud/              <-- création, récupération, mises à jour des données
-│   │   └── __init__.py
-│   ├── __init__.py
-│   ├── main.py            <-- point d'entrée de notre programme FastAPI
-│   ├── models/            <-- les modèles de notre base de données
-│   │   └── __init__.py
-│   ├── schemas/           <-- les schémas de validation des modèles
-│   │   └── __init__.py
-│   ├── templates/         <-- fichiers html/jinja
-│   ├── tests/             <-- tests
-│   │   └── __init__.py
-│   └── views/             <-- fonctions gérant les requêtes HTTP
-│       └── __init__.py
-├── public/                <-- fichiers CSS, Javascript et fichiers statiques
-└── venv/                  <-- environnement virtuel créé à la partie 1
+├── app/                   <-- répertoire contenant le code Python</br>
+│   ├── core/              <-- fichiers partagés (config, exceptions, …)</br>
+│   │   └── __init__.py</br>
+│   ├── crud/              <-- création, récupération, mises à jour des données</br>
+│   │   └── __init__.py</br>
+│   ├── __init__.py</br>
+│   ├── main.py            <-- point d'entrée de notre programme FastAPI</br>
+│   ├── models/            <-- les modèles de notre base de données</br>
+│   │   └── __init__.py</br>
+│   ├── schemas/           <-- les schémas de validation des modèles</br>
+│   │   └── __init__.py</br>
+│   ├── templates/         <-- fichiers html/jinja</br>
+│   ├── tests/             <-- tests</br>
+│   │   └── __init__.py</br>
+│   └── views/             <-- fonctions gérant les requêtes HTTP</br>
+│       └── __init__.py</br>
+├── public/                <-- fichiers CSS, Javascript et fichiers statiques</br>
+└── venv/                  
 
 ***Next step : Deploy Deep Learning Models With FastAPI***

@@ -10,7 +10,7 @@
 - CRUD
 
 ### Structure du projet: 
-(tuto source : https://pereprogramming.com/) </br>
+[Tuto source](https://pereprogramming.com/) </br>
 
 ├── app/                   <-- répertoire contenant le code Python</br>
 │   ├── core/              <-- fichiers partagés (config, exceptions, …)</br>
